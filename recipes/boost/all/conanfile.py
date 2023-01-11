@@ -65,6 +65,8 @@ CONFIGURE_OPTIONS = (
 
 class BoostConan(ConanFile):
     name = "boost"
+    version = "1.79.0"
+    settings = "os", "arch", "compiler", "build_type"
     description = "Boost provides free peer-reviewed portable C++ source libraries"
     url = "https://github.com/conan-io/conan-center-index"
     homepage = "https://www.boost.org"
