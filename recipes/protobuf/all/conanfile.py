@@ -11,6 +11,7 @@ required_conan_version = ">=1.43.0"
 
 class ProtobufConan(ConanFile):
     name = "protobuf"
+    version = "3.9.1"
     description = "Protocol Buffers - Google's data interchange format"
     topics = ("protocol-buffers", "protocol-compiler", "serialization", "rpc", "protocol-compiler")
     url = "https://github.com/conan-io/conan-center-index"
