@@ -1373,6 +1373,8 @@ class BoostConan(ConanFile):
         self.cpp_info.components["headers"].names["cmake_find_package_multi"] = "headers"
         self.cpp_info.components["headers"].names["pkg_config"] = "boost"
 
+        self.cpp_info.components["headers"].defines.append("_LIBCPP_ENABLE_CXX20_REMOVED_TYPE_TRAITS")
+
         if self.options.system_no_deprecated:
             self.cpp_info.components["headers"].defines.append("BOOST_SYSTEM_NO_DEPRECATED")
 
