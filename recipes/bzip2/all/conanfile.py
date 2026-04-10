@@ -16,6 +16,7 @@ required_conan_version = ">=1.53.0"
 
 
 class Bzip2Conan(ConanFile):
+    version = "1.0.8"
     name = "bzip2"
     url = "https://github.com/conan-io/conan-center-index"
     homepage = "https://sourceware.org/bzip2"
