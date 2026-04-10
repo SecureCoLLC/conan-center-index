@@ -1,7 +1,14 @@
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeToolchain, cmake_layout
-from conan.tools.files import apply_conandata_patches, copy, export_conandata_patches, get, save
+from conan.tools.files import apply_conandata_patches, copy, export_conandata_patches, get, save, rmdir
 from conan.tools.scm import Version
+try:
+    from conan.errors import ConanException
+except Exception:
+    try:
+        from conans.errors import ConanException
+    except Exception:
+        ConanException = Exception
 import os
 import textwrap
 
@@ -46,7 +53,26 @@ class Bzip2Conan(ConanFile):
         cmake_layout(self, src_folder="src")
 
     def source(self):
-        get(self, **self.conan_data["sources"][self.version], strip_root=True)
+        data = dict(self.conan_data["sources"][self.version])
+        urls = data.pop("url")
+        if not isinstance(urls, list):
+            urls = [urls]
+
+        last_error = None
+        for url in urls:
+            self.output.info(f"Trying source URL: {url}")
+            try:
+                rmdir(self, self.source_folder)
+            except Exception:
+                pass
+            try:
+                get(self, url=url, strip_root=True, **data)
+                return
+            except Exception as exc:
+                last_error = exc
+                self.output.warning(f"Failed to download from {url}: {exc}")
+
+        raise ConanException(f"Unable to download sources for {self.ref} from any configured URL. Last error: {last_error}")
 
     def generate(self):
         tc = CMakeToolchain(self)
