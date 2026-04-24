@@ -12,6 +12,7 @@ required_conan_version = ">=2.1"
 
 
 class ProtobufConan(ConanFile):
+    version = "3.9.1"
     name = "protobuf"
     deprecated = "protobuf 3.x is no longer supported by its authors - this version is kept for legacy reasons. Please migrate to a newer version"
     description = "Protocol Buffers - Google's data interchange format"
