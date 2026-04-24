@@ -91,6 +91,9 @@ class ProtobufConan(ConanFile):
     def _configure_cmake(self):
         if not self._cmake:
             self._cmake = CMake(self)
+            if self.settings.os == "Android":
+                self._cmake.definitions["CMAKE_CXX_STANDARD_LIBRARIES"] = "-llog"
+
             self._cmake.definitions["CMAKE_INSTALL_CMAKEDIR"] = self._cmake_install_base_path.replace("\\", "/")
             self._cmake.definitions["protobuf_WITH_ZLIB"] = self.options.with_zlib
             self._cmake.definitions["protobuf_BUILD_TESTS"] = False
